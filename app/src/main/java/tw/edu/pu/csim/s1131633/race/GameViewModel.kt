@@ -21,32 +21,52 @@ class GameViewModel: ViewModel() {
     var circleX by mutableStateOf(0f)
     var circleY by mutableStateOf( 0f)
 
+    var score by mutableStateOf(0)
 
     // 設定螢幕寬度與高度
     fun SetGameSize(w: Float, h: Float) {
         screenWidthPx = w
         screenHeightPx = h
-    }
-
-    fun StartGame() {
-        //回到初使位置
+        // 初始化圓形位置
         circleX = 100f
-        circleY = screenHeightPx - 100f
-
-        viewModelScope.launch {
-            while (gameRunning) { // 每0.1秒循環
-                delay(100)
-                circleX += 10
-
-                if (circleX >= screenWidthPx - 100){
-                    circleX = 100f
-                }
-            }
-        }
+        circleY = h - 100f
     }
 
     fun MoveCircle(x: Float, y: Float) {
         circleX += x
         circleY += y
+
+        // 限制圓形不超出螢幕
+        if (circleX < 100f) circleX = 100f
+        if (circleX > screenWidthPx - 100f) circleX = screenWidthPx - 100f
+        if (circleY < 100f) circleY = 100f
+        if (circleY > screenHeightPx - 100f) circleY = screenHeightPx - 100f
+    }
+
+    fun StartGame() {
+        if (gameRunning) return // 避免重複啟動
+
+        gameRunning = true
+        score = 0
+
+        // 回到初始位置
+        circleX = 100f
+        circleY = screenHeightPx - 100f
+
+        viewModelScope.launch {
+            while (gameRunning) {
+                delay(100) // 每0.1秒循環
+                circleX += 10
+
+                if (circleX >= screenWidthPx - 100f) {
+                    circleX = 100f
+                    score++
+                }
+            }
+        }
+    }
+
+    fun StopGame() {
+        gameRunning = false
     }
 }
