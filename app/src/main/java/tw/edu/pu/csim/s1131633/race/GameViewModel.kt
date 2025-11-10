@@ -44,4 +44,9 @@ class GameViewModel: ViewModel() {
             }
         }
     }
+
+    fun MoveCircle(x: Float, y: Float) {
+        circleX += x
+        circleY += y
+    }
 }
