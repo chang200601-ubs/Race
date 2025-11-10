@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,12 +23,17 @@ fun GameScreen(message: String,gameViewModel: GameViewModel) {
             drawCircle(
                 color = Color.Red,
                 radius = 100f,
-                center = Offset(100f, 100f)
+                center = Offset(x=gameViewModel.circleX,y=gameViewModel.circleY)
             )
         }
 
 
         Text(text = message+ gameViewModel.screenWidthPx.toString() + "*"
         + gameViewModel.screenHeightPx.toString())
+
+        Button(onClick = {gameViewModel.gameRunning=true
+            gameViewModel.StartGame()}) {
+            Text(text = "遊戲開始")
+        }
     }
 }
