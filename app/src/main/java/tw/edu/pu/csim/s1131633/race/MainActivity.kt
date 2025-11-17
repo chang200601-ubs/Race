@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RaceTheme {
                 GameScreen(
-                    message = "學生: 張伊傑\n分數: ",
+                    message = "學生: 張伊傑2\n分數: ",
                     gameViewModel = gameViewModel
                 )
             }
